@@ -1,0 +1,40 @@
+name: dockercompose14160792188509702647
+services:
+  api:
+    build:
+      context: D:\Projects\C# Projects\Furniture
+      dockerfile: Api/Dockerfile
+    container_name: api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    image: api
+    networks:
+      network: null
+    ports:
+    - mode: ingress
+      target: 80
+      published: "5050"
+      protocol: tcp
+  postgres:
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+    image: postgres:15
+    networks:
+      network: null
+    ports:
+    - mode: ingress
+      target: 5432
+      published: "5432"
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: D:\Projects\C# Projects\Furniture
+      target: /var/lib/postgresql/data
+      bind:
+        create_host_path: true
+networks:
+  network:
+    name: dockercompose14160792188509702647_network
+    driver: bridge
